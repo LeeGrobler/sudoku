@@ -1,27 +1,73 @@
-# Sudoku
+# Sudoku Daily
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+Sudoku Daily is a simple Angular-based Sudoku game that allows users to solve a daily Sudoku puzzle. The goal of Sudoku is to fill a 9x9 grid with numbers so that each row, column, and 3x3 section contain all of the digits between 1 and 9.
 
-## Development server
+![Sudoku Daily Screenshot](screenshot.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- A new Sudoku puzzle every day
+- Responsive layout
+- Check your solution at any time
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Getting Started
 
-## Build
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
 
-## Running unit tests
+Make sure you have [Node.js](https://nodejs.org/) and [Angular CLI](https://cli.angular.io/) installed on your machine.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installation
 
-## Running end-to-end tests
+1. Clone the repo
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+git clone https://github.com/yourusername/sudoku-daily.git
+```
 
-## Further help
+2. Navigate to the project directory
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+cd sudoku-daily
+```
+
+3. Install NPM packages
+
+```
+npm install
+```
+
+4. Start the development server
+
+```
+ng serve
+```
+
+5. Open your browser and navigate to `http://localhost:4200/`.
+
+## Running Tests
+
+To run the tests for this project, run the following command in your terminal:
+
+```
+ng test
+```
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [OpenAI](https://www.openai.com/) for assistance with code and documentation
