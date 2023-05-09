@@ -2,7 +2,7 @@
 
 Sudoku Daily is a simple Angular-based Sudoku game that allows users to solve a daily Sudoku puzzle. The goal of Sudoku is to fill a 9x9 grid with numbers so that each row, column, and 3x3 section contain all of the digits between 1 and 9.
 
-![Sudoku Daily Screenshot](screenshot.png)
+![Sudoku Daily Screenshot](/src/assets/images/screenshot.png)
 
 ## Features
 
