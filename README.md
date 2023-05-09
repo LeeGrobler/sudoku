@@ -8,7 +8,7 @@ Sudoku Daily is a simple Angular-based Sudoku game that allows users to solve a 
 
 - A new Sudoku puzzle every day
 - Responsive layout
-- Check your solution at any time
+- Download puzzle screenshot to print or solve on IPad
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ Make sure you have [Node.js](https://nodejs.org/) and [Angular CLI](https://cli.
 1. Clone the repo
 
 ```
-git clone https://github.com/yourusername/sudoku-daily.git
+git clone https://github.com/LeeGrobler/sudoku-daily.git
 ```
 
 2. Navigate to the project directory
