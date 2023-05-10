@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import html2canvas from 'html2canvas'
 
 import { SupabaseService } from './services/supabase.service'
 import { Sudoku, Puzzle } from '../models/sudoku'
@@ -34,8 +35,6 @@ export class AppComponent {
       const { data, error, status } = await this.supabase.getDailySudoku()
       if (error && status !== 406) throw error
 
-      console.log('data:', data)
-
       if (data) {
         if (!data.length) throw new Error('No daily sudoku found')
 
@@ -68,5 +67,23 @@ export class AppComponent {
       this.status = this.solved ? 'You won! 🥳' : 'Not yet. Try again. 😅'
       if (!this.solved) setTimeout(() => (this.status = ''), 5000)
     }
+  }
+
+  download() {
+    const el = document.getElementById('screenshot-area')
+    if (!el) return
+
+    html2canvas(el).then(canvas => {
+      const a = document.createElement('a')
+      a.href = canvas.toDataURL()
+      a.download = `sudoku - ${new Date()
+        .toLocaleDateString('EN-ZA', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+        })
+        .replace(/\//g, '-')}.jpg`
+      a.click()
+    })
   }
 }

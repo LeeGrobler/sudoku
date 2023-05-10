@@ -32,7 +32,12 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "websocket",
+              "cross-fetch",
+              "html2canvas"
+            ]
           },
           "configurations": {
             "production": {
