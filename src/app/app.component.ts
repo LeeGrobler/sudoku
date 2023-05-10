@@ -16,7 +16,8 @@ export class AppComponent {
     month: 'long',
     day: 'numeric',
   })
-  loading = false
+  solved: boolean = false
+  status: string = ''
   sudoku!: Sudoku
   grid: Puzzle = []
 
@@ -28,18 +29,16 @@ export class AppComponent {
 
   async getDailySudoku() {
     try {
-      this.loading = true
+      this.status = 'Loading...'
 
       const { data, error, status } = await this.supabase.getDailySudoku()
       if (error && status !== 406) throw error
 
       console.log('data:', data)
 
-      // if (!data?.length) {
-      //   throw new Error('No daily sudoku found')
-      // }
-
       if (data) {
+        if (!data.length) throw new Error('No daily sudoku found')
+
         this.grid = data[0]['puzzle'].map((row: (typeof this.grid)[0]) =>
           row.map((cell: (typeof this.grid)[0][0]) => ({
             ...cell,
@@ -47,12 +46,12 @@ export class AppComponent {
           })),
         )
       }
+
+      this.status = ''
     } catch (err) {
       if (err instanceof Error) {
-        console.log('error: ', err.message)
+        this.status = `Error: ${err.message}`
       }
-    } finally {
-      this.loading = false
     }
   }
 
@@ -61,10 +60,13 @@ export class AppComponent {
   }
 
   checkSolution() {
-    const checkCell = (s: boolean, v: (typeof this.grid)[0][0]) => s && v.current === v.actual
-    const checkRow = (s: boolean, v: (typeof this.grid)[0]) => s && v.reduce(checkCell, true)
-    const solved = this.grid.reduce(checkRow, true)
+    if (!this.solved) {
+      const checkCell = (s: boolean, v: (typeof this.grid)[0][0]) => s && v.current === v.actual
+      const checkRow = (s: boolean, v: (typeof this.grid)[0]) => s && v.reduce(checkCell, true)
+      this.solved = this.grid.reduce(checkRow, true)
 
-    console.log('solved:', solved)
+      this.status = this.solved ? 'You won! 🥳' : 'Not yet. Try again. 😅'
+      if (!this.solved) setTimeout(() => (this.status = ''), 5000)
+    }
   }
 }

@@ -19,8 +19,8 @@ export class SupabaseService {
       .select('*')
       .eq(
         'play_at',
-        // new Date('2023-05-11')
-        new Date()
+        // new Date(new Date('2024-05-11').setFullYear(2020))
+        new Date(new Date().setFullYear(2020))
           .toLocaleDateString('EN-ZA', {
             year: 'numeric',
             month: 'numeric',

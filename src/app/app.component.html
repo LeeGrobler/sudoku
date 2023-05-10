@@ -2,6 +2,7 @@
   <div class="flex flex-col items-center justify-center gap-2">
     <h1 class="text-6xl font-bold">{{ title }}</h1>
     <p class="text-xl">{{ date }}</p>
+    <p class="text-xl">{{ status }}</p>
   </div>
 
   <!-- <div class="flex gap-4"> -->
@@ -52,5 +53,14 @@
     </div>
   </div> -->
 
-  <button (click)="checkSolution()" class="btn-solve">Check</button>
+  <button
+    (click)="checkSolution()"
+    class="btn-solve bg-blue-500 text-white font-bold py-2 px-4 rounded"
+    [ngClass]="{
+      'opacity-50': solved,
+      'hover:bg-blue-700': !solved,
+    }"
+  >
+    Check
+  </button>
 </main>
