@@ -1,7 +1,7 @@
 <main class="min-h-screen flex flex-col items-center justify-center">
   <section id="screenshot-area" class="mb-8 text-xl border-4 border-double border-gray-500 p-12">
     <div class="flex flex-col items-center justify-center mb-4 gap-2">
-      <h1 class="text-6xl font-bold">{{ title }}</h1>
+      <h1 class="text-6xl font-bold" [ngClass]="{ 'pb-5': downloading }">{{ title }}</h1>
       <p>By Lee Grobler</p>
       <p>{{ date }}</p>
       <p>{{ status }}</p>
@@ -16,7 +16,7 @@
         <div
           class="cell flex items-center justify-center w-8 h-8 border-b border-r border-black"
           *ngFor="let cell of row; index as j"
-          [ngClass]="{ 'border-r-2': j % 3 === 2 }"
+          [ngClass]="{ 'border-r-2': j % 3 === 2, 'pb-5': downloading }"
         >
           <div *ngIf="!cell.moddable; then showNumber; else showSelect"></div>
           <ng-template #showNumber>{{ cell.actual }}</ng-template>

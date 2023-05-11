@@ -21,6 +21,7 @@ export class AppComponent {
   status: string = ''
   sudoku!: Sudoku
   grid: Puzzle = []
+  downloading: boolean = false
 
   constructor(private supabase: SupabaseService) {}
 
@@ -73,17 +74,25 @@ export class AppComponent {
     const el = document.getElementById('screenshot-area')
     if (!el) return
 
-    html2canvas(el).then(canvas => {
-      const a = document.createElement('a')
-      a.href = canvas.toDataURL()
-      a.download = `sudoku - ${new Date()
+    this.downloading = true
+
+    setTimeout(() => {
+      const filename = `sudoku - ${new Date()
         .toLocaleDateString('EN-ZA', {
           year: 'numeric',
           month: 'numeric',
           day: 'numeric',
         })
         .replace(/\//g, '-')}.jpg`
-      a.click()
+
+      html2canvas(el).then(canvas => {
+        const a = document.createElement('a')
+        a.href = canvas.toDataURL()
+        a.download = filename
+        a.click()
+      })
+
+      this.downloading = false
     })
   }
 }
