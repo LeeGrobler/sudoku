@@ -51,6 +51,8 @@ export class AppComponent {
     } catch (err) {
       if (err instanceof Error) {
         this.status = `Error: ${err.message}`
+      } else {
+        this.status = `Error: ${err}`
       }
     }
   }
