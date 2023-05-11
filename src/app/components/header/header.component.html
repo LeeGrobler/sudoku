@@ -1,0 +1,11 @@
+<div class="flex flex-col items-center justify-center mb-4 gap-2 text-xl">
+  <h1 class="text-6xl font-bold" [ngClass]="{ 'pb-5': downloading }">{{ title }}</h1>
+  <span>
+    By
+    <a href="https://lee-grobler.com/" target="_blank">{{
+      downloading ? 'lee-grobler.com' : 'Lee Grobler'
+    }}</a>
+  </span>
+  <p>{{ date }}</p>
+  <p>{{ status }}</p>
+</div>

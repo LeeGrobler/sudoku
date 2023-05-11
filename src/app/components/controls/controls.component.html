@@ -1,0 +1,14 @@
+<div class="flex gap-2">
+  <app-button
+    [text]="solved ? 'Solved' : 'Check'"
+    [disabled]="solved"
+    [color]="'blue'"
+    (btnClick)="action('checkSolution')"
+  />
+
+  <app-button
+    [text]="solved ? 'Solved' : 'Download'"
+    [disabled]="solved"
+    (btnClick)="action('download')"
+  />
+</div>

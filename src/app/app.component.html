@@ -1,57 +1,13 @@
 <main class="min-h-screen flex flex-col items-center justify-center">
-  <section id="screenshot-area" class="mb-8 text-xl border-4 border-double border-gray-500 p-12">
-    <div class="flex flex-col items-center justify-center mb-4 gap-2">
-      <h1 class="text-6xl font-bold" [ngClass]="{ 'pb-5': downloading }">{{ title }}</h1>
-      <p>By Lee Grobler</p>
-      <p>{{ date }}</p>
-      <p>{{ status }}</p>
-    </div>
+  <section id="screenshot-area" class="mb-8 border-4 border-double border-gray-500 p-12">
+    <app-header [downloading]="downloading" [status]="status" />
 
-    <div class="puzzle-grid border-t-2 border-l-2 border-black w-max mx-auto">
-      <div
-        *ngFor="let row of grid; index as i"
-        class="puzzle-row flex"
-        [ngClass]="{ 'border-b border-black': i % 3 === 2 }"
-      >
-        <div
-          class="puzzle-cell flex items-center justify-center w-8 h-8 border-b border-r border-black"
-          *ngFor="let cell of row; index as j"
-          [ngClass]="{ 'border-r-2': j % 3 === 2, 'pb-5': downloading }"
-        >
-          <div *ngIf="!cell.moddable; then showNumber; else showSelect"></div>
-          <ng-template #showNumber>{{ cell.actual }}</ng-template>
-          <ng-template #showSelect>
-            <select
-              class="appearance-none w-full h-full cursor-pointer outline-none text-center text-blue-500"
-              (change)="updateCell(i, j, $event)"
-            >
-              <option
-                *ngFor="let val of ['', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
-                [value]="val"
-              >
-                {{ val }}
-              </option>
-            </select>
-          </ng-template>
-        </div>
-      </div>
-    </div>
+    <app-grid
+      [grid]="grid"
+      [downloading]="downloading"
+      (updateCell)="updateCell($event.i, $event.j, $event.e)"
+    />
   </section>
 
-  <div class="flex gap-2">
-    <button
-      (click)="checkSolution()"
-      class="btn-solve bg-blue-500 text-white font-bold py-2 px-4 rounded"
-      [ngClass]="{ 'opacity-50': solved, 'hover:bg-blue-700': !solved }"
-    >
-      Check
-    </button>
-
-    <button
-      (click)="download()"
-      class="btn-solve bg-gray-500 text-white font-bold py-2 px-4 rounded"
-    >
-      Download
-    </button>
-  </div>
+  <app-controls [solved]="solved" (checkSolution)="checkSolution()" (download)="download()" />
 </main>

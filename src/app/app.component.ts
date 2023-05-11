@@ -10,13 +10,6 @@ import { Sudoku, Puzzle } from '../models/sudoku'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Sudoku Daily'
-  date = new Date().toLocaleDateString(undefined, {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
   solved: boolean = false
   status: string = ''
   sudoku!: Sudoku
@@ -73,28 +66,30 @@ export class AppComponent {
   }
 
   download() {
-    const el = document.getElementById('screenshot-area')
-    if (!el) return
+    if (!this.solved) {
+      const el = document.getElementById('screenshot-area')
+      if (!el) return
 
-    this.downloading = true
+      this.downloading = true
 
-    setTimeout(() => {
-      const filename = `sudoku - ${new Date()
-        .toLocaleDateString('EN-ZA', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
+      setTimeout(() => {
+        const filename = `sudoku - ${new Date()
+          .toLocaleDateString('EN-ZA', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          })
+          .replace(/\//g, '-')}.jpg`
+
+        html2canvas(el).then(canvas => {
+          const a = document.createElement('a')
+          a.href = canvas.toDataURL()
+          a.download = filename
+          a.click()
         })
-        .replace(/\//g, '-')}.jpg`
 
-      html2canvas(el).then(canvas => {
-        const a = document.createElement('a')
-        a.href = canvas.toDataURL()
-        a.download = filename
-        a.click()
+        this.downloading = false
       })
-
-      this.downloading = false
-    })
+    }
   }
 }

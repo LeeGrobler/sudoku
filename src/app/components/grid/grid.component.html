@@ -1,0 +1,29 @@
+<div class="puzzle-grid border-t-2 border-l-2 border-black w-max mx-auto text-xl">
+  <div
+    *ngFor="let row of grid; index as i"
+    class="puzzle-row flex"
+    [ngClass]="{ 'border-b border-black': i % 3 === 2 }"
+  >
+    <div
+      class="puzzle-cell flex items-center justify-center w-8 h-8 border-b border-r border-black"
+      *ngFor="let cell of row; index as j"
+      [ngClass]="{ 'border-r-2': j % 3 === 2, 'pb-5': downloading }"
+    >
+      <div *ngIf="!cell.moddable; then showNumber; else showSelect"></div>
+      <ng-template #showNumber>{{ cell.actual }}</ng-template>
+      <ng-template #showSelect>
+        <select
+          class="appearance-none w-full h-full cursor-pointer outline-none text-center text-blue-500"
+          (change)="update(i, j, $event)"
+        >
+          <option
+            *ngFor="let val of ['', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
+            [value]="val"
+          >
+            {{ val }}
+          </option>
+        </select>
+      </ng-template>
+    </div>
+  </div>
+</div>
