@@ -14,6 +14,7 @@
       <ng-template #showSelect>
         <select
           class="appearance-none w-full h-full cursor-pointer outline-none text-center text-blue-500"
+          [disabled]="disabled"
           (change)="update(i, j, $event)"
         >
           <option

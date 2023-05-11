@@ -5,6 +5,7 @@
     <app-grid
       [grid]="grid"
       [downloading]="downloading"
+      [disabled]="solved"
       (updateCell)="updateCell($event.i, $event.j, $event.e)"
     />
   </section>

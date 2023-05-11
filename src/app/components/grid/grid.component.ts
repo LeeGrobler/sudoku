@@ -9,6 +9,7 @@ import { Puzzle } from 'src/models/sudoku'
 export class GridComponent {
   @Input() grid: Puzzle = []
   @Input() downloading: boolean = false
+  @Input() disabled: boolean = false
 
   @Output() updateCell = new EventEmitter<{ i: number; j: number; e: Event }>()
 

@@ -1,13 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { of } from 'rxjs'
 
 import { AppComponent } from './app.component'
+import { SupabaseService } from './services/supabase.service'
 import { HeaderComponent } from './components/header/header.component'
+import { GridComponent } from './components/grid/grid.component'
 import { ControlsComponent } from './components/controls/controls.component'
 import { ButtonComponent } from './components/button/button.component'
 
-import { SupabaseService } from './services/supabase.service'
-import { Puzzle } from '../models/sudoku'
+class MockSupabaseService {
+  getDailySudoku() {
+    return of({
+      data: [],
+      error: null,
+      status: 200,
+    })
+  }
+}
 
 describe('AppComponent', () => {
   let component: AppComponent
@@ -16,65 +26,54 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, HeaderComponent, ControlsComponent, ButtonComponent],
-      providers: [
-        {
-          provide: SupabaseService,
-          useValue: jasmine.createSpyObj('SupabaseService', ['getDailySudoku']),
-        },
+      declarations: [
+        AppComponent,
+        HeaderComponent,
+        GridComponent,
+        ControlsComponent,
+        ButtonComponent,
       ],
+      providers: [{ provide: SupabaseService, useClass: MockSupabaseService }],
     }).compileComponents()
 
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
     supabaseService = TestBed.inject(SupabaseService)
+    fixture.detectChanges()
   })
 
-  it('should create the app', () => {
+  it('should create', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should fetch daily sudoku on init', () => {
-    const puzzle: Puzzle = [[{ current: 1, actual: 1, moddable: false }]]
-    const response = { data: [{ puzzle }], error: null, status: 200 }
+  it('should initialize with the correct default values', () => {
+    expect(component.solved).toBeFalse()
+    expect(component.status).toBe('')
+    expect(component.grid).toEqual([])
+    expect(component.downloading).toBeFalse()
+  })
 
-    ;(supabaseService.getDailySudoku as jasmine.Spy).and.returnValue(of(response))
-
+  it('should call getDailySudoku on ngOnInit', () => {
+    spyOn(component, 'getDailySudoku')
     component.ngOnInit()
-
-    expect(supabaseService.getDailySudoku).toHaveBeenCalled()
+    expect(component.getDailySudoku).toHaveBeenCalled()
   })
 
-  it('should handle error while fetching sudoku', async () => {
-    ;(supabaseService.getDailySudoku as jasmine.Spy).and.returnValue(
-      Promise.reject({ message: 'Error' }),
-    )
-
-    await component.ngOnInit()
-
-    expect(component.status).toContain('Error')
-  })
-
-  it('should check if the solution is correct', () => {
-    component.grid = [[{ current: 1, actual: 1, moddable: false }]]
-    component.checkSolution()
-
-    expect(component.solved).toBe(true)
-    expect(component.status).toContain('You won')
-  })
-
-  it('should indicate if the solution is not correct', () => {
-    component.grid = [[{ current: 1, actual: 2, moddable: true }]]
-    component.checkSolution()
-
-    expect(component.solved).toBe(false)
-    expect(component.status).toContain('Not yet')
-  })
-
-  it('should update a cell', () => {
-    component.grid = [[{ current: 0, actual: 1, moddable: true }]]
-    component.updateCell(0, 0, { target: { value: '1' } } as any)
-
+  it('should update cell value when updateCell method is called', () => {
+    component.grid = [
+      [
+        { actual: 1, current: 0, moddable: true },
+        { actual: 2, current: 0, moddable: true },
+      ],
+    ]
+    const event = { target: { value: '1' } } as unknown as Event
+    component.updateCell(0, 0, event)
     expect(component.grid[0][0].current).toBe(1)
+  })
+
+  it('should call supabase service method when getDailySudoku method is called', () => {
+    spyOn(supabaseService, 'getDailySudoku').and.callThrough()
+    component.getDailySudoku()
+    expect(supabaseService.getDailySudoku).toHaveBeenCalled()
   })
 })

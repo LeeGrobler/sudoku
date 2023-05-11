@@ -55,41 +55,37 @@ export class AppComponent {
   }
 
   checkSolution() {
-    if (!this.solved) {
-      const checkCell = (s: boolean, v: (typeof this.grid)[0][0]) => s && v.current === v.actual
-      const checkRow = (s: boolean, v: (typeof this.grid)[0]) => s && v.reduce(checkCell, true)
-      this.solved = this.grid.reduce(checkRow, true)
+    const checkCell = (s: boolean, v: (typeof this.grid)[0][0]) => s && v.current === v.actual
+    const checkRow = (s: boolean, v: (typeof this.grid)[0]) => s && v.reduce(checkCell, true)
+    this.solved = this.grid.reduce(checkRow, true)
 
-      this.status = this.solved ? 'You won! 🥳' : 'Not yet. Try again. 😅'
-      if (!this.solved) setTimeout(() => (this.status = ''), 5000)
-    }
+    this.status = this.solved ? 'You won! 🥳' : 'Not yet. Try again. 😅'
+    if (!this.solved) setTimeout(() => (this.status = ''), 5000)
   }
 
   download() {
-    if (!this.solved) {
-      const el = document.getElementById('screenshot-area')
-      if (!el) return
+    const el = document.getElementById('screenshot-area')
+    if (!el) return
 
-      this.downloading = true
+    this.downloading = true
 
-      setTimeout(() => {
-        const filename = `sudoku - ${new Date()
-          .toLocaleDateString('EN-ZA', {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-          })
-          .replace(/\//g, '-')}.jpg`
-
-        html2canvas(el).then(canvas => {
-          const a = document.createElement('a')
-          a.href = canvas.toDataURL()
-          a.download = filename
-          a.click()
+    setTimeout(() => {
+      const filename = `sudoku - ${new Date()
+        .toLocaleDateString('EN-ZA', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
         })
+        .replace(/\//g, '-')}.jpg`
 
-        this.downloading = false
+      html2canvas(el).then(canvas => {
+        const a = document.createElement('a')
+        a.href = canvas.toDataURL()
+        a.download = filename
+        a.click()
       })
-    }
+
+      this.downloading = false
+    })
   }
 }
