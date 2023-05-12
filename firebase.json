@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "sudoku-8b266",
+    "public": "dist/sudoku",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
