@@ -15,7 +15,7 @@ jobs:
       - name: Generate Environments
         run: node github.js
         env:
-          SUPABASE_DEETS: `${{ secrets.SUPABASE_DEETS }}`
+          SUPABASE_DEETS: ${{ secrets.SUPABASE_DEETS }}
 
       - name: Build
         run: npm install
