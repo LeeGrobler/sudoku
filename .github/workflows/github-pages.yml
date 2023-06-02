@@ -3,9 +3,6 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-env:
-  supabaseUrl: ${{ secrets.supabaseUrl }}
-  supabaseKey: ${{ secrets.supabaseKey }}
 jobs:
   build-push-gcr:
     name: Build and Deploy
@@ -14,6 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Generate Environments
+        run: node github.js
+        env:
+          SUPABASE_DEETS: `${{ secrets.SUPABASE_DEETS }}`
 
       - name: Build
         run: npm install
