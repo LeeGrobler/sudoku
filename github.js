@@ -28,4 +28,6 @@ fs.access(dir, fs.constants.F_OK, err => {
     console.error('ERROR:', error)
     process.exit(1)
   }
+
+  process.exit(0)
 })
