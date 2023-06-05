@@ -4,6 +4,10 @@ Sudoku Daily is a simple Angular-based Sudoku game that allows users to solve a 
 
 ![Sudoku Daily Screenshot](/src/assets/images/screenshot.png)
 
+## Live Demo
+
+You can test the live application by visiting https://leegrobler.github.io/sudoku.
+
 ## Features
 
 - A new Sudoku puzzle every day
